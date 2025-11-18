@@ -1,0 +1,73 @@
+This text file describes how to set a nonzero initial velocity for MPAS.
+
+1. Add W as a variable for the initial conditions in 
+[CAM_clone]/src/dynamics/tests/inic_analytic.F90
+
+  a) At line 41, add W as a variable in subroutine dyn_set_inic_col()
+and in the ! Dummy arguments list, add:
+
+real(r8), optional, intent(inout) :: W(:,:)      ! vertical velocity (nonhydrostatic)
+
+b) Add W as a variable to subroutine dyn_set_inic_cblock(),
+and in the ! Dummy arguments list, add:
+
+real(r8), optional, intent(inout) :: W(:,:)      ! vertical velocity (nonhydrostatic)
+
+c) Add W as an argument to all the initial condition calls,
+starting at line 161:
+select case(trim(analytic_ic_type))
+
+For example:
+case('held_suarez_1994')
+  call hs94_set_ic(latvals, lonvals, U=U, V=V, W=W, T=T, PS=PS, PHIS=PHIS_OUT,  &
+       Q=Q, m_cnst=m_cnst, mask=mask_use, verbose=verbose_use)
+
+
+d) Make calls for W as per the other prognostics.
+This requires a lot of changes (8, by my count).
+Anywhere there is a code with if (present(U)) etc. 
+a corresponding block for W needs to be added.
+For example,
+
+if(present(W)) then
+  call get_input_shape(W, 'W', mname, size1, size2, size3, subname)
+end if
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+2. For each initial condition in the [CAM_clone]/src/dynamics/tests/initial_conditions
+directory, modify these scripts to use W. This requires three steps:
+ a) Add W as an argument to the [IC_name]_set_ic() routine.
+ b) In the ! Dummy arguments list, add:
+
+   real(r8), optional, intent(inout) :: W(:,:)     ! vertical velocity (nonhydrostatic)
+
+ c) POSSIBLE EXTRA:
+ If there are variables lu, lv ... (e.g in ic_baro_dry_jw06.F90)
+ modify the corresponding !Local variables line to add lw:
+
+ logical                           :: lu,lv,lw,lt,lq,l3d_vars
+
+and when initialising the 3D vars, modify the code to have W statements of:
+      lu = present(U)
+      lv = present(V)
+      lw = present(W)
+      lT = present(T)
+      lq = present(Q)
+      l3d_vars = lu .or. lv .or. lw .or. lt .or. lq
+      nlev = -1
+        if (l3d_vars) then
+        if (lu) nlev = size(U, 2)
+        if (lv) nlev = size(V, 2)
+        if (lw) nlev = size(W, 2)
+        if (lt) nlev = size(T, 2)
+        if (lq) nlev = size(Q, 2)
+
+
+
+
+
+
+
+
+
+

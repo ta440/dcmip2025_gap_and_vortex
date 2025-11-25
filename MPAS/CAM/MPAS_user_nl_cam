@@ -1,0 +1,52 @@
+! Users should add all user specific namelist changes below in the form of 
+! namelist_var = new_namelist_value 
+
+! Choose the test case
+analytic_ic_type = 'gap_horiz_mount_flow'
+!analytic_ic_type = 'vortex_horiz_mount_flow'
+
+write_nstep0 = .TRUE. ! Output the initial condition
+empty_htapes = .TRUE.
+avgflag_pertape = 'I'
+fincl1 = 'U', 'V', 'T', 'OMEGA', 'PS', 'PHIS', 'Z3', 'w', 'theta', 'rho'
+MFILT = 90
+
+!!! For mpasa60, 0.5 degree, ATM_NCPL = 1920:
+mpas_dt = 22.5 
+
+NHTFRQ = 24 ! Output every 0.25 small Earth days
+
+!!! Remove T perturbations in the Held-Suarez compset
+pertlim = 0.0
+
+! Small Earth (X=20) radius
+rearth = 318561.0 
+
+! Scale the Smagorinsky diffusion depending on resolution:
+mpas_len_disp = 3000.0D0 ! mpasa60
+
+! Turn off the default RF:
+mpas_rayleigh_damp_u=.FALSE.
+
+! Vertical velocity damping
+mpas_zd = 40000 ! Disable the W damping
+mpas_xnutr = 0.0D0
+
+! For mpasa60
+mpas_block_decomp_file_prefix = '/glade/campaign/cesm/cesmdata/cseg/inputdata/atm/cam/inic/mpas/mpasa60.graph.info.part.'
+
+!!!!!!! Gap, X20, no Coriolis !!!!!!!!!!!!
+omega = 0
+NCDATA='/glade/u/home/timand/mpas_grids/paper_six/mpasa60_gap_omega0_L20km_L57_new_vgrid.init.nc'
+
+!!!!!!!!! Gap, X20, with Coriolis !!!!!!!!!!!!!!!
+!sday = 4308.2
+!NCDATA='/glade/u/home/timand/mpas_grids/paper_six/mpasa60_gap_with_rot_L20km_L57_new_vgrid.init.nc'
+
+!!!!!!!!!! Vortex, X20, no Coriolis !!!!!!!!!
+!omega=0.0
+!NCDATA='/glade/u/home/timand/mpas_grids/paper_six/mpasa60_vortex_omega0_L20km_L57_new_vgrid.init.nc'
+
+!!!!!!!!!! Vortex, X20, with Coriolis !!!!!!!!!!
+!sday = 4308.2
+!NCDATA='/glade/u/home/timand/mpas_grids/paper_six/mpasa60_vortex_with_rot_L20km_L57_new_vgrid.init.nc'

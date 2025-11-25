@@ -32,5 +32,5 @@ STOP_OPTION=nsteps
 case.setup
 
 # Copy across the Held-Saurez routines for the RF layer:
-cp /glade/u/home/timand/CAM_6_4_080_25042025/cases/CAM_6_4_080_paper_six_mpasa60_L20km_L57/SourceMods/src.cam/held_suarez_1994.F90 ./SourceMods/src.cam/held_suarez_1994.F90
-cp /glade/u/home/timand/CAM_6_4_080_25042025/cases/CAM_6_4_080_paper_six_mpasa60_L20km_L57/SourceMods/src.cam/held_suarez_cam.F90 ./SourceMods/src.cam/held_suarez_cam.F90
+cp /glade/u/home/timand/CAM_6_4_080_25042025/cases/cam_6_4_080_paper_six_mpasa60_L20km_L57/SourceMods/src.cam/held_suarez_1994.F90 ./SourceMods/src.cam/held_suarez_1994.F90
+cp /glade/u/home/timand/CAM_6_4_080_25042025/cases/cam_6_4_080_paper_six_mpasa60_L20km_L57/SourceMods/src.cam/held_suarez_cam.F90 ./SourceMods/src.cam/held_suarez_cam.F90

@@ -1,0 +1,72 @@
+! Users should add all user specific namelist changes below in the form of 
+! namelist_var = new_namelist_value 
+! Choose which case:
+analytic_ic_type = 'gap_horiz_mount_flow'
+!analytic_ic_type = 'vortex_horiz_mount_flow'
+
+write_nstep0 = .TRUE. ! Output the initial condition
+empty_htapes = .TRUE.
+avgflag_pertape = 'I'
+fincl1 = 'U', 'V', 'T', 'OMEGA', 'PS', 'PHIS', 'Z3'
+MFILT = 100
+NDENS = 2
+
+! For ATM_NCPL = 1920:
+NHTFRQ = 24 ! Output every 0.25 small Earth days
+
+! Switch to sixth-order divergence damping, which
+! is more stable than eighth-order
+fv3_nord = 2
+
+! For C192, increase the number of vertical remaps per physics timestep
+! for stability. This reduces the acoustic (dynamics) timestep size
+! by a factor of 2.
+fv3_k_split = 4
+
+! Play around with vertical remapping options
+! Keep kord_tm as negative to use Tv remapping
+! Default is monotonic cubic spline (9s)
+! Vanilla PPM is (6s)
+!fv3_kord_mt = 4
+!fv3_kord_tm = -4
+!fv3_kord_tr = 4
+!fv3_kord_wz = 4
+
+! Horizontal transport scheme
+! CAM default transport:
+fv3_hord_mt = 10
+fv3_hord_vt = 10
+fv3_hord_tm = 10
+fv3_hord_dp = -10
+fv3_hord_tr = 8
+
+! Try the virtually-invsicid scheme
+!fv3_hord_mt = 5
+!fv3_hord_vt = 5
+!fv3_hord_tm = 5
+!fv3_hord_dp = -5
+!fv3_hord_tr = -5
+
+! Option to use vorticity damping
+!fv3_do_vort_damp = .TRUE.
+!fv3_vtdm4 = 0.05
+
+! Turn off the inbuilt RF and sponge layers
+fv3_tau = 0.0
+fv3_d2_bg_k1 = 0.0
+fv3_d2_bg_k2 = 0.0
+  
+! Remove T perturbations with the 
+! Held-Suarez compset
+pertlim = 0.0
+
+! Small Earth of X=20
+rearth = 318561 ! Scale by 1/X, base value is 6371220 m
+
+! Set the Earth's rotation rate. 
+! Set either omega=0 (no rotation) or sday (with rotation).
+omega = 0 ! No Coriolis
+!sday = 4308.2 ! With Coriolis. Defines omega=2*pi/sday. Scale by 1/X, with the base sday is 86164.1 s.
+
+! 30 km stretched grid. Change this is testing a different vertical resolution.
+NCDATA='/glade/u/home/timand/vertical_grids/paper_six/cam_vcoords_dzlow100_dzmax500_top20km_L57.nc' 

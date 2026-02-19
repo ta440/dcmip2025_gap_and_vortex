@@ -10,9 +10,9 @@ Add discussion of making the new ic file, and defining it as a new option within
 2. Create a new case, using
    cime/scripts/create_newcase --case [your_casename] --res [dycore_res] --compset FHS94 --run-unsupported --project [project_number] .
 
-   For the dycore_res option:
-   SE: ne60_ne60_mg16
-   FV3: C192_C192_mg17
+   For the dycore_res option: \
+   SE: ne60_ne60_mg16 \
+   FV3: C192_C192_mg17 \
    MPAS mpasa60_mpasa60
 
 3. Move into the directory specified by [your_casename]

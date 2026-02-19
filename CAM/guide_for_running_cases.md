@@ -4,3 +4,13 @@ Here are instructions for running the test cases in CAM.
 
 
 Add discussion of making the new ic file, and defining it as a new option within the namelist, etc. .
+
+
+1. Move into a local CAM clone.
+2. Create a new case, using
+   cime/scripts/create_newcase --case [your_casename] --res [dycore_res] --compset FHS94 --run-unsupported --project [project_number] .
+
+   For the dycore_res option:
+   SE: ne60_ne60_mg16
+   FV3: C192_C192_mg17
+   MPAS mpasa60_mpasa60

@@ -11,7 +11,9 @@ avgflag_pertape = 'I'
 fincl1 = 'U', 'V', 'T', 'OMEGA', 'PS', 'PHIS', 'Z3', 'w', 'theta', 'rho'
 MFILT = 90
 
-!!! For mpasa60, 0.5 degree, ATM_NCPL = 1920:
+! Set the dynamics timestep
+! This is equivalent to dt_phys/2,
+! for number_of_sub_steps=2
 mpas_dt = 22.5 
 
 NHTFRQ = 24 ! Output every 0.25 small Earth days

@@ -21,4 +21,5 @@ Add discussion of making the new ic file, and defining it as a new option within
 6. Build the case
 7. Run the case!
 
-Note, running FV3 with the small Earth modification may require some other changes. Refer to the [] text file for more information.
+Note, running FV3 with the small Earth modification requires an additional change in CAM6.
+ In fv_arrays ...

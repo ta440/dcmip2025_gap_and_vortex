@@ -22,7 +22,7 @@ STOP_OPTION=nsteps
 ./xmlchange STOP_N=1920
 
 # Use the Held-Suarez compset to enable modified Rayleigh Friction
-# and use the L38 30 km strectched grid.
+# and use the L57 20 km stretched grid.
 ./xmlchange --file env_build.xml --id CAM_CONFIG_OPTS --val \
 "--phys held_suarez --analytic_ic --nlev=57"
 
@@ -31,6 +31,6 @@ STOP_OPTION=nsteps
 # Set up the case:
 case.setup
 
-# Copy across the Held-Saurez routines for the RF layer:
+# Make the RF damping routines, or more simply, copy across existing ones!
 cp /glade/u/home/timand/CAM_6_4_100_11082025/cases/cam_6_4_100_se_ne60_ztop20km_L57_new_RF/SourceMods/src.cam/held_suarez_1994.F90 ./SourceMods/src.cam/held_suarez_1994.F90
 cp /glade/u/home/timand/CAM_6_4_100_11082025/cases/cam_6_4_100_se_ne60_ztop20km_L57_new_RF/SourceMods/src.cam/held_suarez_cam.F90 ./SourceMods/src.cam/held_suarez_cam.F90

@@ -22,4 +22,15 @@ Add discussion of making the new ic file, and defining it as a new option within
 7. Run the case!
 
 Note, running FV3 with the small Earth modification requires an additional change in CAM6.
- In fv_arrays ...
+Move to src/dynamics/fv3.
+Make a copy of fv_arrays from atmos_cubed_sphere/model/fv_arrays.F90 into src_override.
+
+Now, in the src_override/fv_arrays.F90 file, edit the definitions of radius and omega around line 37:
+
+For the cases without rotation:
+real(kind=r8_kind), public :: radius = cnst_radius/20.0d0
+real(kind=r8_kind), public :: omega = cnst_omega*0.0d0
+
+For the cases with rotation:
+real(kind=r8_kind), public :: radius = cnst_radius/20.0d0
+real(kind=r8_kind), public :: omega = cnst_omega*20.0d0

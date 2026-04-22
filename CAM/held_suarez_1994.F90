@@ -101,7 +101,7 @@ contains
     real(kind_phys)            :: u0
     real(kind_phys)            :: u_base(ncol)  ! reference u profile in IC
     real(kind_phys)            :: half_pi  ! 0.5*pi
-    real(kind_phys)            :: kr, kr_imp, kr_base ! RF friction coefficients
+    real(kind_phys)            :: kr, kr_imp ! RF friction coefficients
     real(kind_phys)            :: tau      ! Time scale of Rayleigh friction
     real(kind_phys)            :: tau_inv  ! Inverse time scale of Rayleigh friction
     real(kind_phys)            :: H        ! Isothermal scale height
@@ -115,7 +115,10 @@ contains
 
     ! Choose the time scale
     !tau = sday ! 1 day
-    tau = sday/10._kind_phys
+    !tau = sday/10._kind_phys
+
+    ! Stronger for new implementation
+    tau = 100._kind_phys
 
     ! Depth of the RF layer
     RF_layer_depth = 10000._kind_phys
@@ -180,11 +183,10 @@ contains
       do i = 1, ncol
         if (pmid(i,k) < p_c(i)) then
           kr = tau_inv*( sin(half_pi * log(p_c(i)/pmid(i,k))/log(p_c(i)/p_i_top(i)))**2._kind_phys )
-          kr_imp = 1._kind_phys/(1._kind_phys + kr*ztodt) - 1._kind_phys
-          kr_base = kr*ztodt/(1._kind_phys + kr*ztodt)
+          kr_imp = kr/(1._kind_phys + kr*ztodt)
 
-          du(i,k) = uwnd(i,k)*kr_imp + kr_base*u_base(i)
-          dv(i,k) = vwnd(i,k)*kr_imp
+          du(i,k) = kr_imp*(u_base(i) - uwnd(i,k)) 
+          dv(i,k) = -kr_imp*vwnd(i,k)
         end if
       end do
     end do
